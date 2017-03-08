@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <h1>{{ campeonato.titulo }}</h1>
+    Data: {{ campeonato.data }} <br/>
+    Dificuldade: {{ campeonato.dificuldade }} <br/>
+    Velocidade: {{ campeonato.velocidade }} <br/>
+
+    {% if campeonato.jogador1_id and campeonato.jogador2_id %}
+    <h2>{{ campeonato.jogador1 }} x {{ campeonato.jogador2 }}</h2>
+    {% endif %}
+
+    {% if vencedor %}
+    Vencedor: {{ vencedor.apelido }} <br/>
+    {% elif not campeonato.jogador1_id %}
+    <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 1</a>
+    {% elif not campeonato.jogador2_id %}
+    <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 2</a>
+    {% else %}
+    Vez de: {{ campeonato.jogador1 }} e {{ campeonato.jogador2 }}
+    {% endif %}
+  </body>
+</html>

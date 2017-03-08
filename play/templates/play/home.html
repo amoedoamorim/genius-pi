@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Genius-Pi</title>
+  </head>
+  <body>
+    <h1>Bem vindo ao Genius-Pi</h1>
+    <h2>Campeonato Atual</h2>
+    {% if campeonatoAtual %}
+      <a href="{% url 'play.views.campeonato' pk=campeonatoAtual.pk %}">{{ campeonatoAtual }}</a><br/>
+    {% else %}
+      <a href="{% url 'play.views.campeonato_new' %}">Novo campeonato</a>
+    {% endif %}
+
+    <h2>Campeonatos Anteriores</h2>
+    {% for camp in campeonatosPassados %}
+    <a href="{% url 'play.views.campeonato' pk=camp.pk %}">{{ camp.id }} - {{ camp.titulo }}: ( {{ camp.vencedor_id }} ) {{ camp.data }}</a> <br/>
+    {% endfor %}
+  </body>
+</html>
