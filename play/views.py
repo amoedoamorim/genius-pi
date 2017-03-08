@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from .forms import CampeonatoForm, JogadorForm
 from .models import Campeonato, Jogador
+import subprocess
 
 def home(request):
     campeonatosPassados = Campeonato.objects.all().exclude(vencedor_id = None)
@@ -66,3 +67,7 @@ def jogador_new(request):
     else:
         form = JogadorForm()
     return render(request, 'play/jogador_new.html', {'form': form})
+
+def partida(request):
+    process = subprocess.Popen(['python', '/home/alexandre/workspace/genius-pi/play/teste.py'])
+    return JsonResponse({'partida': 'sucesso'})

@@ -1,4 +1,6 @@
 <html>
+  <head>
+  </head>
   <body>
     <h1>{{ campeonato.titulo }}</h1>
     Data: {{ campeonato.data }} <br/>
@@ -17,6 +19,7 @@
     <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 2</a>
     {% else %}
     Vez de: {{ campeonato.jogador1 }} e {{ campeonato.jogador2 }}
+    <p><a href="{% url 'play.views.partida' %}">Jogar</a></p>
     {% endif %}
   </body>
 </html>
