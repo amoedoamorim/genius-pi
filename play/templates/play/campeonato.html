@@ -6,6 +6,7 @@
     Data: {{ campeonato.data }} <br/>
     Dificuldade: {{ campeonato.dificuldade }} <br/>
     Velocidade: {{ campeonato.velocidade }} <br/>
+    Num. rounds: {{ campeonato.num_rounds }} <br/>
 
     {% if campeonato.jogador1_id and campeonato.jogador2_id %}
     <h2>{{ campeonato.jogador1 }} x {{ campeonato.jogador2 }}</h2>
@@ -13,12 +14,15 @@
 
     {% if vencedor %}
     Vencedor: {{ vencedor.apelido }} <br/>
+    <p>
+      <a href="/">Início</a>
+    </p>
     {% elif not campeonato.jogador1_id %}
     <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 1</a>
     {% elif not campeonato.jogador2_id %}
     <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 2</a>
     {% else %}
-    Vez de: {{ campeonato.jogador1 }} e {{ campeonato.jogador2 }}
+    Vez de: {{ campeonato.get_jogador_vez.nome }}
     <p><a href="{% url 'play.views.partida' %}">Jogar</a></p>
     {% endif %}
   </body>

@@ -13,7 +13,7 @@
 
     <h2>Campeonatos Anteriores</h2>
     {% for camp in campeonatosPassados %}
-    <a href="{% url 'play.views.campeonato' pk=camp.pk %}">{{ camp.id }} - {{ camp.titulo }}: ( {{ camp.vencedor_id }} ) {{ camp.data }}</a> <br/>
+    <a href="{% url 'play.views.campeonato' pk=camp.pk %}">{{ camp.id }} - {{ camp.titulo }}: ( {{ camp.get_vencedor }} ) {{ camp.data }}</a> <br/>
     {% endfor %}
   </body>
 </html>

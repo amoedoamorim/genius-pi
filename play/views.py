@@ -18,10 +18,11 @@ def home(request):
 def campeonato(request, pk):
     campeonato = Campeonato.objects.get(pk = pk)
 
-    if campeonato.vencedor_id:
-        vencedor = Jogador.objects.get(pk = campeonato.vencedor_id)
-    else:
-        vencedor = None;
+    # if campeonato.vencedor_id:
+    #     vencedor = Jogador.objects.get(pk = campeonato.vencedor_id)
+    # else:
+    #     vencedor = None;
+    vencedor = campeonato.get_vencedor()
 
     return render(request, 'play/campeonato.html', {'campeonato': campeonato, 'vencedor': vencedor})
 
@@ -69,5 +70,5 @@ def jogador_new(request):
     return render(request, 'play/jogador_new.html', {'form': form})
 
 def partida(request):
-    process = subprocess.Popen(['python', '/home/alexandre/workspace/genius-pi/play/teste.py'])
+    process = subprocess.Popen(['python', '/home/pi/genius-pi/play/teste.py','10','10'])
     return JsonResponse({'partida': 'sucesso'})
