@@ -153,36 +153,36 @@ class Partida:
         start = time.time()
 
         # test-stuff
-        random_rounds = random.randint(1, 5)
-        while self.RoundNo <= random_rounds:
+        # random_rounds = random.randint(1, 5)
+        # while self.RoundNo <= random_rounds:
 
-        # while self.correct:
+        while self.correct:
             print("Round %i" %self.RoundNo)
             #LED cycle
             for mout in range(1, self.RoundNo+1):
                 Partida.LEDout(self.sequence[mout])
             #Response
-            # for ans in range(1, self.RoundNo+1):
-                # push=Partida.SwitchChosen()
-                # Partida.LEDout(push)
-                # if (push!=colour[ans]):
-                #    Partida.LoserLights()
-                #    self.correct = False
-                #    # TODO: persist pontos, num_jogadas where id
-                #    store_pontos(jogador_id, self.RoundNo-1)
-                #    break
+            for ans in range(1, self.RoundNo+1):
+                push=Partida.SwitchChosen()
+                Partida.LEDout(push)
+                if (push!=self.sequence[ans]):
+                   Partida.LoserLights()
+                   self.correct = False
+                   # TODO: persist pontos, num_jogadas where id
+                   store_pontos(jogador_id, self.RoundNo-1)
+                   break
             self.RoundNo+=1
-            # if (self.RoundNo==self.max+1):
-            #     end = time.time()
-            #     tempo = (end - start)
+            if (self.RoundNo==self.max+1):
+                end = time.time()
+                tempo = (end - start)
             #     # TODO: persist pontos, num_jogadas, tempo, menor_tempo where id
-            #     store_pontos_tempo(jogador_id, self.RoundNo-1, tempo)
-            #     break
+                store_pontos_tempo(jogador_id, self.RoundNo-1, tempo)
+                break
             time.sleep(0.5)
 
         # test-stuff
-        end = time.time()
-        tempo = (end - start)
-        print('tempo')
-        print(tempo)
-        store_pontos_tempo(jogador_id, self.RoundNo-1, tempo)
+        # end = time.time()
+        # tempo = (end - start)
+        # print('tempo')
+        # print(tempo)
+        # store_pontos_tempo(jogador_id, self.RoundNo-1, tempo)
