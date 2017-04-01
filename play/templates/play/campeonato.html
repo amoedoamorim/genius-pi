@@ -1,29 +1,46 @@
-<html>
-  <head>
-  </head>
-  <body>
+{% extends 'play/base.html' %}
+
+{% block content %}
     <h1>{{ campeonato.titulo }}</h1>
     Data: {{ campeonato.data }} <br/>
-    Dificuldade: {{ campeonato.dificuldade }} <br/>
-    Velocidade: {{ campeonato.velocidade }} <br/>
-    Num. rounds: {{ campeonato.num_rounds }} <br/>
+    <p>
+      Dificuldade: {{ campeonato.dificuldade }} <br/>
+      Velocidade: {{ campeonato.velocidade }} <br/>
+      Num. rounds: {{ campeonato.num_rounds }} <br/>
+    </p>
 
     {% if campeonato.jogador1_id and campeonato.jogador2_id %}
-    <h2>{{ campeonato.jogador1 }} x {{ campeonato.jogador2 }}</h2>
+    <h2>{{ campeonato.jogador1 }} {{campeonato.jogador1.pontos}} x {{campeonato.jogador2.pontos}} {{ campeonato.jogador2 }}</h2>
     {% endif %}
 
     {% if vencedor %}
-    Vencedor: {{ vencedor.apelido }} <br/>
+    <h2>Vencedor: {{ vencedor.apelido }} <br/></h2>
+
+    <p>
+      <strong>Jogador 1: {{ campeonato.jogador1.nome }} ({{ campeonato.jogador1.apelido }}) </strong><br/>
+      Tempo total de jogadas: {{ campeonato.jogador1.tempo }} segundos <br/>
+      Total de pontos: {{ campeonato.jogador1.pontos }} <br/>
+      Jogada mais rápida: {{ campeonato.jogador1.menor_tempo }} segundos <br/>
+    </p>
+
+    <p>
+      <strong>Jogador 2: {{ campeonato.jogador2.nome }} ({{ campeonato.jogador2.apelido }}) </strong><br/>
+      Tempo total de jogadas: {{ campeonato.jogador2.tempo }} segundos <br/>
+      Total de pontos: {{ campeonato.jogador2.pontos }} <br/>
+      Jogada mais rápida: {{ campeonato.jogador2.menor_tempo }} segundos <br/>
+    </p>
+
     <p>
       <a href="/">Início</a>
     </p>
     {% elif not campeonato.jogador1_id %}
-    <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 1</a>
+    <p><a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 1</a></p>
     {% elif not campeonato.jogador2_id %}
-    <a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 2</a>
+    <p><a href="{% url 'play.views.jogador_new' %}">Entrar Jogador 2</a></p>
     {% else %}
-    Vez de: {{ campeonato.get_jogador_vez.nome }}
+    <small>{{ campeonato.jogador1 }} pontos na rodada: {{campeonato.jogador1.pontos_rodada}}</small><br/>
+    <small>{{ campeonato.jogador2 }} pontos na rodada: {{campeonato.jogador2.pontos_rodada}}</small>
+    <p>Vez de: {{ campeonato.get_jogador_vez.nome }}</p>
     <p><a href="{% url 'play.views.partida' %}">Jogar</a></p>
     {% endif %}
-  </body>
-</html>
+{% endblock %}

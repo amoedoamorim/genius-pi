@@ -1,4 +1,6 @@
-<html>
+{% extends 'play/base.html' %}
+
+{% block content %}
   <h1>Novo Campeonato</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
@@ -7,4 +9,4 @@
     <p>
       <a href="/">Início</a>
     </p>
-</html>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from .forms import CampeonatoForm, JogadorForm
 from .models import Campeonato, Jogador
+from .partida import Partida
 import subprocess
 
 def home(request):
@@ -17,11 +18,6 @@ def home(request):
 
 def campeonato(request, pk):
     campeonato = Campeonato.objects.get(pk = pk)
-
-    # if campeonato.vencedor_id:
-    #     vencedor = Jogador.objects.get(pk = campeonato.vencedor_id)
-    # else:
-    #     vencedor = None;
     vencedor = campeonato.get_vencedor()
 
     return render(request, 'play/campeonato.html', {'campeonato': campeonato, 'vencedor': vencedor})
@@ -70,5 +66,18 @@ def jogador_new(request):
     return render(request, 'play/jogador_new.html', {'form': form})
 
 def partida(request):
-    process = subprocess.Popen(['python', '/home/pi/genius-pi/play/teste.py','10','10'])
-    return JsonResponse({'partida': 'sucesso'})
+    camp = Campeonato.objects.filter(vencedor_id = None).last()
+    if camp:
+        jogador_id = camp.get_jogador_vez().pk
+        # args: velocidade, dificuldade
+        # process = subprocess.Popen(['python', '/home/pi/genius-pi/play/partida.py','10','10'])
+        p = Partida()
+        p.initGPIO()
+        p.initSound()
+        p.initGame(camp.velocidade, camp.dificuldade)
+        p.executar(jogador_id)
+        return redirect('play.views.campeonato', pk = camp.pk)
+    else:
+        return redirect('play.views.home')
+
+    #return JsonResponse({'partida': 'em_andamento', 'jogador_id': jogador_id})

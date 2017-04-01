@@ -26,6 +26,9 @@ class Campeonato(models.Model):
         if self.vencedor_id:
             return Jogador.objects.get(id=self.vencedor_id)
 
+        if (not self.jogador1_id or not self.jogador2_id):
+            return None
+
         jogador1 = self.jogador1()
         jogador2 = self.jogador2()
 
@@ -55,8 +58,10 @@ class Jogador(models.Model):
     nome = models.CharField(max_length=50)
     apelido = models.CharField(max_length=25)
     num_jogadas = models.PositiveIntegerField(default=0)
-    pontos =  models.IntegerField(blank=True, null=True)
-    tempo = models.IntegerField(blank=True, null=True)
+    pontos = models.IntegerField(default=0)
+    pontos_rodada = models.IntegerField(default=0)
+    tempo = models.DecimalField(default=0, max_digits=10, decimal_places=3)
+    menor_tempo = models.DecimalField(default=0, max_digits=10, decimal_places=3)
 
     def __str__(self):
         return self.apelido
